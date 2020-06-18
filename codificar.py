@@ -40,7 +40,9 @@ def tomatriz(omessage, keysize):
     message_matriz=np.array(row)
     return message_matriz
 
-    
+def encode(message_matriz,key):
+    pass
+
 print(tomatriz(omessage,keysize))
 
 
