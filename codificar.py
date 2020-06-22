@@ -51,9 +51,10 @@ def encode(message_matriz,key):
         temporalRow = []
 
 def prettyPrint(encodeMessage):
-    encodeMessageStr = ""
-    toString = str(encodeMessage)
-
+    messageToStr = " "
+    for i in encodeMessage:
+        for j in i:
+            print(j, end=" ")
 
 ## main
 def main():
@@ -61,14 +62,18 @@ def main():
 
     ## Pedir el mensaje
     ## .upper por que el diccionario esta todo en mayusculas y hace mas facil la comparacion.
-    omessage=(input("\n--> Ingrese el mensaje a codificar: ")).upper()
+    omessage=(input("\n--> Ingrese el mensaje a encriptar: ")).upper()
+
+    ## Convertir el mensaje a matriz
     ToMatrix = tomatriz(omessage,keysize)
 
     ## Encriptar mensaje
     encode(ToMatrix, key)
 
     ## Imprimir el mensaje encriptado
-    print(str(encodeMessage), end=' ')
+    print("\n\n--> Mensaje encriptado:")
+    prettyPrint(encodeMessage)
+    print("\n\n")
 
 
 if __name__ == "__main__":
