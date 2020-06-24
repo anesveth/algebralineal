@@ -50,6 +50,12 @@ def encode(message_matriz,key):
         encodeMessage.append(np.matmul(temporalRow, key))
         temporalRow = []
 
+def ToDictionary(encodeMessage):
+    for i in encodeMessage:
+        for j in i:
+            ## mod en length del diccionario para que calzen todos los numeros dentro del diccionario
+            print(diccionario[int(j)%len(diccionario)],end=" ")
+            
 def prettyPrint(encodeMessage):
     messageToStr = " "
     for i in encodeMessage:
@@ -69,10 +75,11 @@ def main():
 
     ## Encriptar mensaje
     encode(ToMatrix, key)
-
+    
     ## Imprimir el mensaje encriptado
     print("\n\n--> Mensaje encriptado:")
-    prettyPrint(encodeMessage)
+    ToDictionary(encodeMessage)
+    # prettyPrint(encodeMessage)
     print("\n\n")
 
 
