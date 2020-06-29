@@ -1,5 +1,6 @@
 import string
 import math
+import random
 import numpy as np
 import sympy as sp
 
@@ -11,10 +12,12 @@ diccionario.append(".")
 
 #Hacer + dinamico luego, tipo poder pedir el tamaño de la matriz. 
 #El punto es solo q la matriz clave sea invertible entonces solo habria que testearla si se genera random.
-key=np.array([[1,2,1,],
-               [0,-1,3],
-               [2,1,0]])
-keysize=len(key)
+# key=np.array([[1,2,1,],
+#                [0,-1,3],
+#                [2,1,0]])
+keysize = random.randint(3,5)
+keyValue = random.randint(5,20)
+key = np.random.randint((keyValue), size=(keysize, keysize))
 
 ## crea una matriz con el mismo numero de columnas que la matriz clave
 def toMatriz(omessage, keysize): 
@@ -52,9 +55,9 @@ def encode(message_matriz,key):
 
 def toDictionary(encodeMessage):
     for i in encodeMessage:
-        for j in i:
+        # for j in i:
             ## mod en length del diccionario para que calzen todos los numeros dentro del diccionario
-            print(diccionario[int(j)%len(diccionario)],end=" ")
+        print(diccionario[int(i)%len(diccionario)],end=" ")
             
 def prettyPrint(encodeMessage):
     for i in encodeMessage:
@@ -62,9 +65,6 @@ def prettyPrint(encodeMessage):
             print(j, end=" ")
 
 key_inv = np.linalg.inv(key) # se deben ingresar
-# message = [24, 9, 42, 27, 22, 68, 10, 11, 4, 52, 43, 15, 52, 37, 77, 72, 47, 55]
-message = input("Ingrese el mensaje a decodificar: ")
-message = message.split()
 
 def decode(message):
     cont = 0
@@ -103,7 +103,10 @@ def main():
     prettyPrint(encodeMessage)
     print("\n\n")
 
-    messag = decode(message)
+    message = input("Ingrese el mensaje a decodificar: ")
+    # message = message.split()
+    mmess = list(map(int, message.split()))
+    print(decode(mmess))
 
 
 if __name__ == "__main__":
