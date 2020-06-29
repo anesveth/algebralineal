@@ -12,11 +12,12 @@ diccionario.append(".")
 
 #Hacer + dinamico luego, tipo poder pedir el tamaño de la matriz. 
 #El punto es solo q la matriz clave sea invertible entonces solo habria que testearla si se genera random.
-# key=np.array([[1,2,1,],
-#                [0,-1,3],
-#                [2,1,0]])
+#key=np.array([[1,2,1,],
+                #[0,-1,3],
+                #[2,1,0]])
+#keysize = len(key)
 keysize = random.randint(3,5)
-keyValue = random.randint(5,20)
+keyValue = random.randint(3,5)
 key = np.random.randint((keyValue), size=(keysize, keysize))
 
 ## crea una matriz con el mismo numero de columnas que la matriz clave
@@ -83,17 +84,24 @@ def decode(message):
         cont += 1
     return deco
 
+def Leerfile(filename):
+    file= open(filename, mode = 'r') 
+    texto_s = file.read()
+    return texto_s
+
+
 ## main
 def main():
     print("\n\n--------------- PROYECTO CRIPTOGRAFÍA ---------------")
-
+    filename=input("\n--> Ingrese el nombre del file a encriptar: ")
+    omessage=(Leerfile(filename)).upper()
     ## Pedir el mensaje
     ## .upper por que el diccionario esta todo en mayusculas y hace mas facil la comparacion.
-    omessage=(input("\n--> Ingrese el mensaje a encriptar: ")).upper()
-
+    #omessage=(input("\n--> Ingrese el mensaje a encriptar: ")).upper()
+    print(omessage)
     ## Convertir el mensaje a matriz
     ToMatrix = toMatriz(omessage,keysize)
-
+ 
     ## Encriptar mensaje
     encode(ToMatrix, key)
     
