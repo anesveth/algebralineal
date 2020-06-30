@@ -10,15 +10,13 @@ diccionario.insert(14,"Ñ")
 diccionario.insert(0," ")
 diccionario.append(".")
 
-#Hacer + dinamico luego, tipo poder pedir el tamaño de la matriz. 
-#El punto es solo q la matriz clave sea invertible entonces solo habria que testearla si se genera random.
-#key=np.array([[1,2,1,],
-                #[0,-1,3],
-                #[2,1,0]])
-#keysize = len(key)
-keysize = random.randint(3,5)
-keyValue = random.randint(3,5)
-key = np.random.randint((keyValue), size=(keysize, keysize))
+key=np.array([[1,2,1,],
+                [0,-1,3],
+                [2,1,0]])
+keysize = len(key)
+# keysize = random.randint(3,5)
+# keyValue = random.randint(3,5)
+# key = np.random.randint((keyValue), size=(keysize, keysize))
 
 ## crea una matriz con el mismo numero de columnas que la matriz clave
 def toMatriz(omessage, keysize): 
@@ -63,23 +61,31 @@ def prettyPrint(encodeMessage):
         for j in i:
             print(j, end=" ")
 
+# crea una matriz con el mismo numero de columnas que la matriz clave
+def toMatrix(message, keysize): 
+    mess = list(map(int, message.split()))
+    message_matriz=np.zeros((math.ceil(len(mess)/keysize),keysize))
+    row=[]
+    k=0
+    ## math.ceil es para round up la division
+    while k < len(message):
+        subrow=[]
+        for j in range(keysize):    
+            try:
+                num = mess[j+k]
+                subrow.append(num)
+            except:
+                ## cuando se acabe el mensaje, se completa la row incompleta con 0's pues serian espacios en blanco
+                subrow.append(0)
+        k += keysize
+        row.append(subrow)
+        message_matriz=np.array(row)
+    return message_matriz
+
 def decode(message, keyInv):
     # keyInvL = len(keyInv)
     result = np.matmul(message,keyInv)
-
-    # cont = 0
-    # ops = len(message) / len(keyInv)
-    # result = np.array([])
-    # while cont < ops:
-    #     numb = []
-    #     for i in range(len(keyInv)):
-    #         numb.append(message[i])
-    #     for i in numb:
-    #         message.remove(i)
-    #     resp = np.dot(numb,keyInv)
-    #     result = np.append(result,resp)
-    result = result.astype(int)
-    #     cont += 1
+    result = np.round(result, 5)
     return result
 
 def Leerfile(filename):
@@ -91,17 +97,14 @@ def Leerfile(filename):
 ## main
 def main():
     print("\n\n--------------- PROYECTO CRIPTOGRAFÍA ---------------")
-    filename=input("\n--> Ingrese el nombre del file a encriptar: ")
-    omessage=(Leerfile(filename)).upper()
-    ## Pedir el mensaje
-<<<<<<< HEAD
-    omessage = (input("\n--> Ingrese el mensaje a encriptar: ")).upper()
+   
+    # filename=input("\n--> Ingrese el nombre del archivo .txt a encriptar: ")
+    # omessage=(Leerfile(filename)).upper()
 
-=======
+    ## Pedir el mensaje
     ## .upper por que el diccionario esta todo en mayusculas y hace mas facil la comparacion.
-    #omessage=(input("\n--> Ingrese el mensaje a encriptar: ")).upper()
-    print(omessage)
->>>>>>> 17282a9058dc1b53df1f1e236b807a48ef66a374
+    omessage=(input("\n--> Ingrese el mensaje a encriptar: ")).upper()
+
     ## Convertir el mensaje a matriz
     ToMatrix = toMatriz(omessage,keysize)
  
@@ -110,17 +113,16 @@ def main():
     
     ## Imprimir el mensaje encriptado
     print("\n\n--> Mensaje encriptado:")
-    toDictionary(encodeMessage)
-    # prettyPrint(encodeMessage)
+    # toDictionary(encodeMessage)
+    prettyPrint(encodeMessage)
     print("\n\n")
 
     message = (input("\n--> Ingrese el mensaje a decodificar: ")).upper()
-    # keyInv = input("\n--> Ingrese el mensaje a decodificar: ")
+    # keyInv = input("\n--> Ingrese la matriz clave: ")
     keyInv = np.linalg.inv(key) # se deben ingresar
     keyInvL = len(keyInv)
 
-    message = toMatriz(message, keyInvL)
-    # # mmess = list(map(int, message.split()))
+    message = toMatrix(message, keyInvL)
     toDictionary(decode(message, keyInv))
 
 
