@@ -39,10 +39,8 @@ def toMatriz(omessage, keysize):
     message_matriz=np.array(row)
     return message_matriz
 
-
 ## matriz fila para guardar temporalmente cada fila del mensaje ingresado
 temporalRow = []
-
 ## matriz que guarda el mensaje encriptado
 encodeMessage = []
 
@@ -55,41 +53,40 @@ def encode(message_matriz,key):
 
 def toDictionary(encodeMessage):
     for i in encodeMessage:
-        # for j in i:
-            ## mod en length del diccionario para que calzen todos los numeros dentro del diccionario
-        print(diccionario[int(i)%len(diccionario)],end=" ")
+        for j in i:
+            # mod en length del diccionario para que calzen todos los numeros dentro del diccionario
+            print(diccionario[int(j)%len(diccionario)],end="")
             
 def prettyPrint(encodeMessage):
     for i in encodeMessage:
         for j in i:
             print(j, end=" ")
 
-key_inv = np.linalg.inv(key) # se deben ingresar
+def decode(message, keyInv):
+    # keyInvL = len(keyInv)
+    result = np.matmul(message,keyInv)
 
-def decode(message):
-    cont = 0
-    ops = len(message) / len(key_inv)
-    deco = ""
-    while cont < ops:
-        numb = []
-        for i in range(len(key_inv)):
-            numb.append(message[i])
-        for i in numb:
-            message.remove(i)
-        result = np.dot(numb,key_inv)
-        result = result.astype(int)
-        for i in result:
-            deco = deco + str(i) + " "
-        cont += 1
-    return deco
+    # cont = 0
+    # ops = len(message) / len(keyInv)
+    # result = np.array([])
+    # while cont < ops:
+    #     numb = []
+    #     for i in range(len(keyInv)):
+    #         numb.append(message[i])
+    #     for i in numb:
+    #         message.remove(i)
+    #     resp = np.dot(numb,keyInv)
+    #     result = np.append(result,resp)
+    result = result.astype(int)
+    #     cont += 1
+    return result
 
 ## main
 def main():
     print("\n\n--------------- PROYECTO CRIPTOGRAFÍA ---------------")
 
     ## Pedir el mensaje
-    ## .upper por que el diccionario esta todo en mayusculas y hace mas facil la comparacion.
-    omessage=(input("\n--> Ingrese el mensaje a encriptar: ")).upper()
+    omessage = (input("\n--> Ingrese el mensaje a encriptar: ")).upper()
 
     ## Convertir el mensaje a matriz
     ToMatrix = toMatriz(omessage,keysize)
@@ -99,14 +96,19 @@ def main():
     
     ## Imprimir el mensaje encriptado
     print("\n\n--> Mensaje encriptado:")
-    # toDictionary(encodeMessage)
-    prettyPrint(encodeMessage)
+    toDictionary(encodeMessage)
+    # prettyPrint(encodeMessage)
     print("\n\n")
 
-    message = input("Ingrese el mensaje a decodificar: ")
-    # message = message.split()
-    mmess = list(map(int, message.split()))
-    print(decode(mmess))
+    message = (input("\n--> Ingrese el mensaje a decodificar: ")).upper()
+    # keyInv = input("\n--> Ingrese el mensaje a decodificar: ")
+    keyInv = np.linalg.inv(key) # se deben ingresar
+    keyInvL = len(keyInv)
+
+    message = toMatriz(message, keyInvL)
+    # # mmess = list(map(int, message.split()))
+    toDictionary(decode(message, keyInv))
+
 
 
 if __name__ == "__main__":
