@@ -61,8 +61,19 @@ def main():
         if opcion == 3:
             print("\n\n////////// DESENCRIPTADNO //////////")
 
+            message = (input("\n► Ingrese el mensaje a desencriptar: ")).upper()
+            keyInv = input("\n► Ingrese la matriz clave: ")
+            keysize = int(input("\n► Ingrese el tamaño de la matriz clave: "))
+            print("")
 
-            print("\n/////////////////////////////////////////")
+            print("\n----- Se ha creado el archivo exitosamente -----\n")
+            message = cod.toMatrix(message, keysize)
+            keyInv = cod.toMatrix(keyInv,keysize)
+            msg = str(cod.toDictionary(cod.decode(message, keyInv)))
+
+            cod.EscribirFile(msg)
+
+            print("\n//////////////////////////////////////")
 
         
         if opcion == 4:
@@ -76,12 +87,12 @@ def main():
             print("\n----- Mensaje desencriptado -----\n")
             message = cod.toMatrix(message, keysize)
             keyInv = cod.toMatrix(keyInv,keysize)
-            cod.toDictionary(cod.decode(message, keyInv))
+            print(cod.toDictionary(cod.decode(message, keyInv)))
             print("")
 
-            print("\n/////////////////////////////////////////")
+            print("\n//////////////////////////////////////")
 
-        seguir = input("\n\n► ¿Desea realizar otra accion? (y/n): ")
+        seguir = input("\n\n► ¿Desea realizar otra acción? (y/n): ")
 
 
 

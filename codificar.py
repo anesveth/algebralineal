@@ -1,6 +1,7 @@
 import string, math, random
 import numpy as np
 import sympy as sp
+import time
 
 #Diccionario empieza en " ", contiene ñ y termina en "."
 diccionario=list(string.ascii_uppercase)
@@ -33,6 +34,7 @@ temporalRow = []
 ## matriz que guarda el mensaje encriptado
 encodeMessage = []
 
+# función para encriptar
 def encode(message_matriz,key):
     ## for para recorrer la matriz con el mensaje ingresado y encriptarlo 
     for row in range(len(message_matriz)):
@@ -42,10 +44,14 @@ def encode(message_matriz,key):
     return encodeMessage
 
 def toDictionary(encodeMessage):
+    msg = ""
     for i in encodeMessage:
         for j in i:
-            print(diccionario[int(j)%len(diccionario)],end="")
+            letra = diccionario[int(j)%len(diccionario)]
+            msg = msg + letra
+    return msg
             
+# función para imprimir el mensaje encriptado
 def prettyPrint(encodeMessage):
     for i in encodeMessage:
         for j in i:
@@ -71,13 +77,26 @@ def toMatrix(message, keysize):
         rows += 1
     return message_matriz
 
+# función para desencriptar
 def decode(message, keyInv):
     invKey = np.linalg.inv(keyInv)
     result = np.matmul(message,invKey)
     result = np.round(result, 5)
     return result
 
+# función para leer un archivo
 def Leerfile(filename):
     file= open(filename, mode = 'r') 
     texto_s = file.read()
     return texto_s
+
+# función para crear y escribir un archivo
+def EscribirFile(message):
+    Time = str(time.strftime("%H:%M:%S"))
+    date = str(time.strftime("%d-%m-%y"))
+    fileName = "msgEncriptado(" + date + "_" + Time + ").txt"
+    print("Nombre del archivo es: " + fileName)
+
+    file = open(fileName, mode = "w") 
+    file.write(message)
+    file.close()
