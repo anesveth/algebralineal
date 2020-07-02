@@ -4,14 +4,16 @@ import codificar as cod
 
 ## main
 def main():
+
     keysize = random.randint(3,5)
     keyValue = random.randint(3,5)
     key = np.random.randint((keyValue), size=(keysize, keysize))
+    mod_for_encryption=11
 
     print("\n\n--------------- PROYECTO CRIPTOGRAFÍA ---------------")
 
     print("\n1. Encriptar un archivo .txt ")
-    print("2. Encriptar un mesaje ")
+    print("2. Encriptar un mensaje ")
     print("3. Desencriptar y generar un archivo .txt ")
     print("4. Desencriptar un mensaje ")
     
@@ -30,7 +32,8 @@ def main():
             encodeMessage = cod.encode(ToMatrix, key)
             
             print("\n\n• Mensaje encriptado:")
-            cod.prettyPrint(encodeMessage)
+            # cod.prettyPrint(encodeMessage)
+            print("▶"+cod.toMOD_Dictionary(encodeMessage)+"◀")
 
             print("\n\n• Matriz clave: ")
             cod.prettyPrint(key)
@@ -48,8 +51,7 @@ def main():
             encodeMessage = cod.encode(ToMatrix, key)
 
             print("\n\n• Mensaje encriptado:")
-            # toDictionary(encodeMessage)
-            cod.prettyPrint(encodeMessage)
+            print("▶"+cod.toMOD_Dictionary(encodeMessage)+"◀")
 
             print("\n\n• Matriz clave: ")
             cod.prettyPrint(key)
@@ -59,25 +61,26 @@ def main():
             print("\n/////////////////////////////////////////")
 
         if opcion == 3:
-            print("\n\n////////// DESENCRIPTADNO //////////")
+            print("\n\n////////// DESENCRIPTANDO //////////")
 
             message = (input("\n► Ingrese el mensaje a desencriptar: ")).upper()
+
             keyInv = input("\n► Ingrese la matriz clave: ")
             keysize = int(input("\n► Ingrese el tamaño de la matriz clave: "))
             print("")
 
-            print("\n----- Se ha creado el archivo exitosamente -----\n")
+            message=cod.FromSecretMessage_to_OriginalNumbers(message,mod_for_encryption)
             message = cod.toMatrix(message, keysize)
             keyInv = cod.toMatrix(keyInv,keysize)
             msg = str(cod.toDictionary(cod.decode(message, keyInv)))
 
             cod.EscribirFile(msg)
-
+            print("\n----- Se ha creado el archivo exitosamente -----\n")
             print("\n//////////////////////////////////////")
 
         
         if opcion == 4:
-            print("\n\n////////// DESENCRIPTADNO //////////")
+            print("\n\n////////// DESENCRIPTANDO //////////")
 
             message = (input("\n► Ingrese el mensaje a desencriptar: ")).upper()
             keyInv = input("\n► Ingrese la matriz clave: ")
@@ -85,6 +88,7 @@ def main():
             print("")
 
             print("\n----- Mensaje desencriptado -----\n")
+            message=cod.FromSecretMessage_to_OriginalNumbers(message,mod_for_encryption)
             message = cod.toMatrix(message, keysize)
             keyInv = cod.toMatrix(keyInv,keysize)
             print(cod.toDictionary(cod.decode(message, keyInv)))

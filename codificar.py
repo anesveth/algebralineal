@@ -43,6 +43,12 @@ def encode(message_matriz,key):
         temporalRow = []
     return encodeMessage
 
+# función para imprimir el mensaje encriptado
+def prettyPrint(encodeMessage):
+    for i in encodeMessage:
+        for j in i:
+            print(j, end=" ")
+
 def toDictionary(encodeMessage):
     msg = ""
     for i in encodeMessage:
@@ -50,12 +56,6 @@ def toDictionary(encodeMessage):
             letra = diccionario[int(j)%len(diccionario)]
             msg = msg + letra
     return msg
-            
-# función para imprimir el mensaje encriptado
-def prettyPrint(encodeMessage):
-    for i in encodeMessage:
-        for j in i:
-            print(j, end=" ")
 
 def toMatrix(message, keysize): 
     mess = list(map(int, message.split()))
@@ -77,12 +77,54 @@ def toMatrix(message, keysize):
         rows += 1
     return message_matriz
 
+#funcion para convertir matriz secreta a letras.
+def toMOD_Dictionary(encodeMessage):
+    msg = ""
+    # print("TERMINA EN "+diccionario[10])
+    # print("MOD EMPIEZA EN "+diccionario[11])
+    for i in encodeMessage:
+        for j in i:
+            ## la variable c representa la cantidad de veces q el numero es divisible en el mod. 
+            ## Esto servira para despues poder regresar las letras a la matriz codificada.
+            c=11      
+            for times in range(math.floor(j/11)): 
+                c+=1
+            # print(j,", MOD = "+str((int(j)%11)),",times = "+str(c-11)+",C = "+str(c))
+            # print("j/11="+str(math.floor(j/11)))
+            ## mod 11. La matriz encodeMessage estara letras de _ hasta J
+            letra=diccionario[int(j)%11]+diccionario[c]
+            msg = msg + letra
+    return msg
+
+# funcion para convertir letras en MOD devuelta a string de numeros que conforman matriz
+def FromSecretMessage_to_OriginalNumbers(secretmessage,mod_for_encryption):
+    original_numbers=""
+    for i in range(len(secretmessage)):
+        ## i debe ser multiplo de 2 pues las pares son letras y las impares son el mod
+        if (i%2==0):
+            l=secretmessage[i]
+            mod_l=secretmessage[i+1]
+
+            number=diccionario.index(l)
+            mod_number=diccionario.index(mod_l)
+
+            mod_number=mod_number-mod_for_encryption
+
+            originalnumber=number+(mod_number*mod_for_encryption)
+            original_numbers=original_numbers+" "+str(originalnumber)
+
+    return original_numbers
+
+
 # función para desencriptar
 def decode(message, keyInv):
     invKey = np.linalg.inv(keyInv)
     result = np.matmul(message,invKey)
     result = np.round(result, 5)
     return result
+
+
+            
 
 # función para leer un archivo
 def Leerfile(filename):
