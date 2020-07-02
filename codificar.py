@@ -137,7 +137,7 @@ def EscribirFile(message):
     Time = str(time.strftime("%H:%M:%S"))
     date = str(time.strftime("%d-%m-%y"))
     fileName = "msgEncriptado(" + date + "_" + Time + ").txt"
-    print("Nombre del archivo es: " + fileName)
+    print("Nombre del archivo: " + fileName)
 
     file = open(fileName, mode = "w") 
     file.write(message)

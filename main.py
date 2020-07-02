@@ -74,8 +74,8 @@ def main():
             keyInv = cod.toMatrix(keyInv,keysize)
             msg = str(cod.toDictionary(cod.decode(message, keyInv)))
 
-            cod.EscribirFile(msg)
             print("\n----- Se ha creado el archivo exitosamente -----\n")
+            cod.EscribirFile(msg)
             print("\n//////////////////////////////////////")
 
         
