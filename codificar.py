@@ -87,7 +87,7 @@ def toMOD_Dictionary(encodeMessage,mod_for_encryption):
         for j in i:
             ## la variable c representa la cantidad de veces q el numero es divisible en el mod. 
             ## Esto servira para despues poder regresar las letras a la matriz codificada.
-            c=11      
+            c=mod_for_encryption      
             for times in range(math.floor(j/mod_for_encryption)): 
                 c+=1
             # print(j,", MOD = "+str((int(j)%11)),",times = "+str(c-11)+",C = "+str(c))

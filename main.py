@@ -33,7 +33,7 @@ def main():
             
             print("\n\n• Mensaje encriptado:")
             # cod.prettyPrint(encodeMessage)
-            print("▶"+cod.toMOD_Dictionary(encodeMessage)+"◀")
+            print("▶"+cod.toMOD_Dictionary(encodeMessage,mod_for_encryption)+"◀")
 
             print("\n\n• Matriz clave: ")
             cod.prettyPrint(key)
