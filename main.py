@@ -51,7 +51,7 @@ def main():
             encodeMessage = cod.encode(ToMatrix, key)
 
             print("\n\n• Mensaje encriptado:")
-            print("▶"+cod.toMOD_Dictionary(encodeMessage)+"◀")
+            print("▶"+cod.toMOD_Dictionary(encodeMessage,mod_for_encryption)+"◀")
 
             print("\n\n• Matriz clave: ")
             cod.prettyPrint(key)
